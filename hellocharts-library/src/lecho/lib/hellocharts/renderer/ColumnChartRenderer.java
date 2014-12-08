@@ -360,6 +360,7 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
 	}
 
 	private void drawLabel(Canvas canvas, Column column, ColumnValue columnValue, boolean isStacked, float offset) {
+        final ColumnChartData chartData = dataProvider.getColumnChartData();
 		final ChartComputator computator = chart.getChartComputator();
 		valuesBuff[0] = columnValue.getValue();
 		final int numChars = column.getFormatter().formatValue(labelBuffer, valuesBuff, columnValue.getLabel());
@@ -388,7 +389,7 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
 			// For not stacked draw label at the top for positive and at the bottom for negative values
 			if (columnValue.getValue() >= baseValue) {
 				top = drawRect.top - offset - labelHeight - labelMargin * 2;
-				if (top < computator.getContentRect().top) {
+				if (top < computator.getContentRect().top || !chartData.isFlexibleLabelPosition()) {
 					top = drawRect.top + offset;
 					bottom = drawRect.top + offset + labelHeight + labelMargin * 2;
 				} else {
@@ -396,7 +397,7 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
 				}
 			} else {
 				bottom = drawRect.bottom + offset + labelHeight + labelMargin * 2;
-				if (bottom > computator.getContentRect().bottom) {
+				if (bottom > computator.getContentRect().bottom || !chartData.isFlexibleLabelPosition()) {
 					top = drawRect.bottom - offset - labelHeight - labelMargin * 2;
 					bottom = drawRect.bottom - offset;
 				} else {

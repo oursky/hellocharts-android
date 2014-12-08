@@ -14,6 +14,7 @@ public class ColumnChartData extends AbstractChartData {
 	private boolean isStacked = false;
 	private float fillRatio = DEFAULT_FILL_RATIO;
 	private float baseValue = DEFAULT_BASE_VALUE;
+    private boolean isFlexibleLabelPosition = true;
 
 	public ColumnChartData() {
 	}
@@ -99,6 +100,20 @@ public class ColumnChartData extends AbstractChartData {
 		this.fillRatio = fillRatio;
 		return this;
 	}
+
+    public boolean isFlexibleLabelPosition(){
+        return isFlexibleLabelPosition;
+    }
+
+    /**
+     * Set whether the chart label is flexible positioned
+     *
+     * @param isFlexibleLabelPosition
+     * @return
+     */
+    public void setFlexibleLabelPosition(boolean isFlexibleLabelPosition){
+        this.isFlexibleLabelPosition = isFlexibleLabelPosition;
+    }
 
 	/**
 	 * @see #setBaseValue(float)
