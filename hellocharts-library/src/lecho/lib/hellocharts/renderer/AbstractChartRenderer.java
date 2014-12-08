@@ -90,6 +90,7 @@ public abstract class AbstractChartRenderer implements ChartRenderer {
 		}
 
 		labelPaint.setTextSize(Utils.sp2px(scaledDensity, data.getValueLabelTextSize()));
+        labelPaint.setColor(data.getValueLabelTextColor());
 		labelPaint.getFontMetricsInt(fontMetrics);
 
 		this.isValueLabelBackgroundEnabled = data.isValueLabelBackgroundEnabled();
@@ -105,10 +106,20 @@ public abstract class AbstractChartRenderer implements ChartRenderer {
 	/**
 	 * Draws label text and label background if isValueLabelBackgroundEnabled is true.
 	 */
-	protected void drawLabelTextAndBackground(Canvas canvas, char[] labelBuffer, int startIndex, int numChars,
+    protected void drawLabelTextAndBackground(Canvas canvas, char[] labelBuffer, int startIndex, int numChars,
 			int autoBackgroundColor) {
-		final float textX;
-		final float textY;
+        drawLabelTextAndBackground(canvas, labelBuffer, startIndex, numChars, autoBackgroundColor,
+                labelPaint.getColor());
+    }
+
+    protected void drawLabelTextAndBackground(Canvas canvas, char[] labelBuffer, int startIndex, int numChars,
+        int autoBackgroundColor, int labelColor) {
+
+        Paint labelPaintCopy = new Paint(labelPaint);
+        labelPaintCopy.setColor(labelColor);
+
+		final float textX = labelBackgroundRect.left + labelMargin;
+		final float textY = labelBackgroundRect.bottom - labelMargin;
 
 		if (isValueLabelBackgroundEnabled) {
 
@@ -117,15 +128,9 @@ public abstract class AbstractChartRenderer implements ChartRenderer {
 			}
 
 			canvas.drawRect(labelBackgroundRect, labelBackgroundPaint);
-
-			textX = labelBackgroundRect.left + labelMargin;
-			textY = labelBackgroundRect.bottom - labelMargin;
-		} else {
-			textX = labelBackgroundRect.left;
-			textY = labelBackgroundRect.bottom;
 		}
 
-		canvas.drawText(labelBuffer, startIndex, numChars, textX, textY, labelPaint);
+		canvas.drawText(labelBuffer, startIndex, numChars, textX, textY, labelPaintCopy);
 	}
 
 	@Override
