@@ -1,4 +1,4 @@
-apply plugin: 'com.android.library'
+apply plugin: 'android-library'
 apply plugin: 'maven-publish'
 
 buildscript {
@@ -6,7 +6,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.12.+'
+    classpath 'com.android.tools.build:gradle:1.0.+'
   }
 }
 
@@ -30,7 +30,7 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName '1.0'
-        applicationId 'lecho.lib.hellocharts'
+        //applicationId 'lecho.lib.hellocharts'
     }
 
     sourceSets {
@@ -45,9 +45,9 @@ android {
         }
     }
 	
-	 buildTypes {
+	buildTypes {
 		release {
-			runProguard false
+			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
@@ -63,30 +63,3 @@ task androidSourcesJar(type: Jar) {
 	from android.sourceSets.main.java.sourceFiles
 }
 
-// To publish to maven local execute "gradle clean build publishToMavenLocal"
-// To publish to nexus execute "gradle clean build publish"
-android.libraryVariants
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact "${project.buildDir}/outputs/aar/${project.name}.aar"
-            artifactId project.name
-            groupId android.defaultConfig.applicationId
-            version android.defaultConfig.versionName
-			
-			artifact androidSourcesJar {
-                classifier "sources"
-            }
-        }
-    }
-    
-    repositories {
-        maven {
-            credentials {
-                username 'nexusUser'
-                password 'nexusPass'
-            }
-            url "http://your-nexus-url/"
-        }
-    }
-}
