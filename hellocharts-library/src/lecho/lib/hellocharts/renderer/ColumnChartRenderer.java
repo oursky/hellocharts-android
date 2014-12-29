@@ -62,6 +62,10 @@ public class ColumnChartRenderer extends AbstractChartRenderer {
 		columnPaint.setStrokeCap(Cap.SQUARE);
 	}
 
+    public void setSubcolumnSpacing(int spacing) {
+        subcolumnSpacing = Utils.dp2px(density, spacing);
+    }
+
 	@Override
 	public void initMaxViewport() {
 		if (isViewportCalculationEnabled) {

@@ -61,6 +61,10 @@ public class ColumnChartView extends AbstractChartView implements ColumnChartDat
 
 	}
 
+    public void setSubcolumnSpacing(int subcolumnSpacing) {
+        ((ColumnChartRenderer) chartRenderer).setSubcolumnSpacing(subcolumnSpacing);
+    }
+
 	@Override
 	public ColumnChartData getChartData() {
 		return data;
@@ -91,7 +95,9 @@ public class ColumnChartView extends AbstractChartView implements ColumnChartDat
 		}
 	}
 
-	public interface ColumnChartOnValueTouchListener {
+
+
+    public interface ColumnChartOnValueTouchListener {
 
 		public void onValueTouched(int selectedLine, int selectedValue, ColumnValue point);
 
@@ -101,11 +107,12 @@ public class ColumnChartView extends AbstractChartView implements ColumnChartDat
 
 	private static class DummyOnValueTouchListener implements ColumnChartOnValueTouchListener {
 
-		@Override
+        private int subcolumnSpacing;
+
+        @Override
 		public void onValueTouched(int selectedLine, int selectedValue, ColumnValue value) {
 		}
 
-		@Override
 		public void onNothingTouched() {
 		}
 
