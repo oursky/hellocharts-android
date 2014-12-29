@@ -299,8 +299,16 @@ public class PieChartRenderer extends AbstractChartRenderer {
 			}
 		}
 
-		final float rawX = labelRadius * arcVector.x + centerX;
-		final float rawY = labelRadius * arcVector.y + centerY;
+		final float rawX;
+		final float rawY;
+        // In case of single value, it look better to center position the label
+        if (maxSum == arcValue.getValue()) {
+            rawX = centerX;
+            rawY = centerY - labelRadius;
+        } else {
+            rawX = labelRadius * arcVector.x + centerX;
+            rawY = labelRadius * arcVector.y + centerY;
+        }
 
 		float left;
 		float right;
