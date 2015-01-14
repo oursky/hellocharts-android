@@ -61,6 +61,10 @@ public class ColumnChartView extends AbstractChartView implements ColumnChartDat
 
 	}
 
+    public void setSubcolumnSpacing(int subcolumnSpacing) {
+        ((ColumnChartRenderer) chartRenderer).setSubcolumnSpacing(subcolumnSpacing);
+    }
+
 	@Override
 	public ColumnChartData getChartData() {
 		return data;
