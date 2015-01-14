@@ -24,7 +24,7 @@ import android.text.TextUtils;
  */
 public class PieChartRenderer extends AbstractChartRenderer {
 	private static final float MAX_WIDTH_HEIGHT = 100f;
-	private static final int DEFAULT_START_ROTATION = 45;
+	private static final int DEFAULT_START_ROTATION = 270;
 	private static final float DEFAULT_LABEL_INSIDE_RADIUS_FACTOR = 0.7f;
 	private static final float DEFAULT_LABEL_OUTSIDE_RADIUS_FACTOR = 1.0f;
 	private static final int DEFAULT_TOUCH_ADDITIONAL_DP = 8;
