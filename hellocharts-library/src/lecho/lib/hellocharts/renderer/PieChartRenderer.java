@@ -232,6 +232,20 @@ public class PieChartRenderer extends AbstractChartRenderer {
 			lastAngle += angle;
 			++arcIndex;
 		}
+        arcIndex = 0;
+        for (ArcValue arcValue : data.getValues()) {
+            final float angle = Math.abs(arcValue.getValue()) * arcScale;
+
+            arcVector.set((float) (Math.cos(Math.toRadians(lastAngle + angle / 2))),
+                    (float) (Math.sin(Math.toRadians(lastAngle + angle / 2))));
+            normalizeVector(arcVector);
+
+            drawLabel(canvas, arcValue);
+
+            lastAngle += angle;
+            ++arcIndex;
+        }
+
 	}
 
 	/**
@@ -252,15 +266,15 @@ public class PieChartRenderer extends AbstractChartRenderer {
 			drawCircleOval.inset(-touchAdditional, -touchAdditional);
 			arcPaint.setColor(arcValue.getDarkenColor());
 			canvas.drawArc(drawCircleOval, lastAngle, angle, true, arcPaint);
-			if (hasLabels || hasLabelsOnlyForSelected) {
-				drawLabel(canvas, arcValue);
-			}
+//			if (hasLabels || hasLabelsOnlyForSelected) {
+//				drawLabel(canvas, arcValue);
+//			}
 		} else {
 			arcPaint.setColor(arcValue.getColor());
 			canvas.drawArc(drawCircleOval, lastAngle, angle, true, arcPaint);
-			if (hasLabels) {
-				drawLabel(canvas, arcValue);
-			}
+//			if (hasLabels) {
+//				drawLabel(canvas, arcValue);
+//			}
 		}
 	}
 
