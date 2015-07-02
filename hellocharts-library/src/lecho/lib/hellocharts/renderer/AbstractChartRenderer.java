@@ -1,5 +1,9 @@
 package lecho.lib.hellocharts.renderer;
 
+import android.graphics.*;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import lecho.lib.hellocharts.ChartComputator;
 import lecho.lib.hellocharts.model.ChartData;
 import lecho.lib.hellocharts.model.SelectedValue;
@@ -7,13 +11,10 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.Utils;
 import lecho.lib.hellocharts.view.Chart;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
-import android.graphics.RectF;
-import android.graphics.Typeface;
+
+import java.util.Arrays;
 
 /**
  * Abstract renderer implementation, every chart renderer extends this class(although it is not required it helps).
@@ -130,7 +131,29 @@ public abstract class AbstractChartRenderer implements ChartRenderer {
 			canvas.drawRect(labelBackgroundRect, labelBackgroundPaint);
 		}
 
-		canvas.drawText(labelBuffer, startIndex, numChars, textX, textY, labelPaintCopy);
+		String cs = new String(labelBuffer);
+		cs = cs.substring(cs.length() - numChars, cs.length());
+		TextPaint p = new TextPaint(labelPaintCopy);
+		StaticLayout sl = new StaticLayout(cs, p, (int) labelBackgroundRect.width(),
+				Layout.Alignment.ALIGN_CENTER, 1, 1, true);
+
+		canvas.save();
+		float textHeight = getTextHeight(cs, labelPaintCopy);
+		int numberOfTextLines = sl.getLineCount();
+		float textYCoordinate = labelBackgroundRect.centerY() -
+				((numberOfTextLines * textHeight) / 2);
+
+		float textXCoordinate = labelBackgroundRect.left;
+
+		canvas.translate(textXCoordinate, textYCoordinate);
+		sl.draw(canvas);
+		canvas.restore();
+	}
+
+	private float getTextHeight(String text, Paint paint) {
+		Rect rect = new Rect();
+		paint.getTextBounds(text, 0, text.length(), rect);
+		return rect.height();
 	}
 
 	@Override

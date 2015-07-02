@@ -348,8 +348,8 @@ public class PieChartRenderer extends AbstractChartRenderer {
 				bottom = rawY - labelMargin;
 			}
 		} else {
-			left = rawX - labelWidth / 2 - labelMargin;
-			right = rawX + labelWidth / 2 + labelMargin;
+			left = rawX - circleRadius / 2;
+			right = rawX + circleRadius / 2;
 			top = rawY - labelHeight / 2 - labelMargin;
 			bottom = rawY + labelHeight / 2 + labelMargin;
 		}
